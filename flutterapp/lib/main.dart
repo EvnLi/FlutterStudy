@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Animation/Animation.dart';
+import 'package:flutterapp/Animation/SizeColor.dart';
+import 'package:flutterapp/Test/SafeArea.dart';
+import 'package:flutterapp/Notifier/ValueNotifier.dart';
 
 void main() {
   runApp(MyApp());
@@ -61,16 +65,18 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO: add some code
     print("****debug11****");
     return Material(
-      child: Container(
-        color: Colors.red,
-        height: 20,
-        // child: ConstrainedBox(
-        //   constraints: BoxConstraints(maxHeight: 40, minWidth: double.infinity),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            // return AnimationDemo();
+            // return SizeColor();
+            // return SafeArea();
+            return ValueNotifierWidget();
+          }));
+        },
         child: Container(
-          color: Colors.yellow,
-          height: 20,
+          color: Colors.red,
         ),
-        // ),
       ),
     );
   }
