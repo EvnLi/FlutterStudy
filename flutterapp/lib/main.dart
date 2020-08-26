@@ -1,20 +1,26 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Animation/Animation.dart';
-import 'package:flutterapp/Animation/SizeColor.dart';
+import 'package:flutter/services.dart';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+// import 'package:flutterapp/Animation/Animation.dart';
+// import 'package:flutterapp/Animation/SizeColor.dart';
 import 'package:flutterapp/Model/user_model.dart';
-import 'package:flutterapp/Test/SafeArea.dart';
-import 'package:flutterapp/Notifier/ValueNotifier.dart';
-import 'package:flutterapp/util/toast_util.dart';
+// import 'package:flutterapp/Test/SafeArea.dart';
+// import 'package:flutterapp/Notifier/ValueNotifier.dart';
+// import 'package:flutterapp/util/toast_util.dart';
 import 'package:flutterapp/ScrollView/custom_sv.dart';
 import 'package:flutterapp/DB/user_db_provider.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:flutterapp/util/toast_util.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,26 +65,121 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String _connectStatus = 'Unknown';
+  final Connectivity _connectivity = Connectivity();
+  StreamSubscription<ConnectivityResult> _streamSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+    _streamSubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectStatus);
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    super.dispose();
+  }
+
+  Future<void> initConnectivity() async {
+    ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } catch (e) {
+      print(e.toString());
+    }
+    return _updateConnectStatus(result);
+  }
+
+  Future<void> _updateConnectStatus(ConnectivityResult result) async {
+    switch (result) {
+      case ConnectivityResult.wifi:
+        String wifiName, wifiBSSID, wifiIP;
+
+        try {
+          if (!kIsWeb && Platform.isIOS) {
+            LocationAuthorizationStatus status =
+                await _connectivity.getLocationServiceAuthorization();
+            if (status == LocationAuthorizationStatus.notDetermined) {
+              status =
+                  await _connectivity.requestLocationServiceAuthorization();
+            }
+            if (status == LocationAuthorizationStatus.authorizedAlways ||
+                status == LocationAuthorizationStatus.authorizedWhenInUse) {
+              wifiName = await _connectivity.getWifiName();
+            } else {
+              wifiName = await _connectivity.getWifiName();
+            }
+          } else {
+            wifiName = await _connectivity.getWifiName();
+          }
+        } on PlatformException catch (e) {
+          print(e.toString());
+          wifiName = "Failed to get Wifi Name";
+        }
+
+        try {
+          if (!kIsWeb && Platform.isIOS) {
+            LocationAuthorizationStatus status =
+                await _connectivity.getLocationServiceAuthorization();
+            if (status == LocationAuthorizationStatus.notDetermined) {
+              status =
+                  await _connectivity.requestLocationServiceAuthorization();
+            }
+            if (status == LocationAuthorizationStatus.authorizedAlways ||
+                status == LocationAuthorizationStatus.authorizedWhenInUse) {
+              wifiBSSID = await _connectivity.getWifiBSSID();
+            } else {
+              wifiBSSID = await _connectivity.getWifiBSSID();
+            }
+          } else {
+            wifiBSSID = await _connectivity.getWifiBSSID();
+          }
+        } on PlatformException catch (e) {
+          print(e.toString());
+          wifiBSSID = "Failed to get Wifi BSSID";
+        }
+
+        try {
+          wifiIP = await _connectivity.getWifiIP();
+        } on PlatformException catch (e) {
+          print(e.toString());
+          wifiIP = "Failed to get Wifi IP";
+        }
+
+        setState(() {
+          _connectStatus = '$result\n'
+              'Wifi Name: $wifiName\n'
+              'Wifi BSSID: $wifiBSSID\n'
+              'Wifi IP: $wifiIP\n';
+        });
+        break;
+      case ConnectivityResult.mobile:
+      case ConnectivityResult.none:
+        setState(() => _connectStatus = result.toString());
+        ToastUtil.show(result.toString());
+        break;
+      default:
+        setState(() => _connectStatus = 'Failed to get connectivity.');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    // TODO: add some code
     print("****debug11****");
     return Material(
       child: GestureDetector(
         onTap: () {
-          insert();
+          // insert();
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             // return AnimationDemo();
             // return SizeColor();
             // return SafeArea();
             // return ValueNotifierWidget();
-            // return CustomSV();
+            return CustomSV();
             // queryDB();
           }));
           // ToastUtil.show('节日来啦');
