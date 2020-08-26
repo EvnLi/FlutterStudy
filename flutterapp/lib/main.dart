@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Animation/Animation.dart';
 import 'package:flutterapp/Animation/SizeColor.dart';
+import 'package:flutterapp/Model/user_model.dart';
 import 'package:flutterapp/Test/SafeArea.dart';
 import 'package:flutterapp/Notifier/ValueNotifier.dart';
+import 'package:flutterapp/util/toast_util.dart';
+import 'package:flutterapp/ScrollView/custom_sv.dart';
+import 'package:flutterapp/DB/user_db_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,6 +14,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -67,17 +72,42 @@ class _MyHomePageState extends State<MyHomePage> {
     return Material(
       child: GestureDetector(
         onTap: () {
+          insert();
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             // return AnimationDemo();
             // return SizeColor();
             // return SafeArea();
-            return ValueNotifierWidget();
+            // return ValueNotifierWidget();
+            // return CustomSV();
+            // queryDB();
           }));
+          // ToastUtil.show('节日来啦');
         },
         child: Container(
           color: Colors.red,
         ),
       ),
     );
+  }
+
+  static insert() async {
+    print('*****1111111**');
+    UserDBProvider dbP = new UserDBProvider();
+    UserModel model = new UserModel();
+    model.id = 123456;
+    model.userName = "小王";
+    model.nick = "忘老五";
+    await dbP.insert(model);
+
+    print('*****2222222**');
+    UserModel model1 = await dbP.getUserInfo(123456);
+    print('*****333333**');
+    print('id=${model1.id},username =${model1.userName},nick=${model1.nick}');
+  }
+
+  queryDB() async {
+    UserDBProvider dbP = new UserDBProvider();
+    UserModel model = await dbP.getUserInfo(123456);
+    print('id=${model.id},username =${model.userName},nick=${model.nick}');
   }
 }
