@@ -5,18 +5,26 @@ import 'package:flutter/services.dart';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-// import 'package:flutterapp/Animation/Animation.dart';
-// import 'package:flutterapp/Animation/SizeColor.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterapp/Animation/Animation.dart';
+import 'package:flutterapp/Animation/SizeColor.dart';
 import 'package:flutterapp/Model/user_model.dart';
-// import 'package:flutterapp/Test/SafeArea.dart';
-// import 'package:flutterapp/Notifier/ValueNotifier.dart';
-// import 'package:flutterapp/util/toast_util.dart';
+import 'package:flutterapp/Area/safe_area.dart';
+import 'package:flutterapp/Notifier/ValueNotifier.dart';
+import 'package:flutterapp/util/toast_util.dart';
 import 'package:flutterapp/ScrollView/custom_sv.dart';
 import 'package:flutterapp/DB/user_db_provider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutterapp/util/toast_util.dart';
+import 'package:flutterapp/stream/stream_builder.dart';
+
+//bloc
+import 'package:flutterapp/bloc/bloc_observer.dart';
+import 'package:flutterapp/bloc/counter_page.dart';
+import 'package:flutterapp/bloc/counter_theme.dart';
 
 void main() {
+  Bloc.observer = SimpleBlocObserver();
   runApp(MyApp());
 }
 
@@ -58,6 +66,7 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
+  @required
   final String title;
 
   @override
@@ -68,6 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
   String _connectStatus = 'Unknown';
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<ConnectivityResult> _streamSubscription;
+  List<String> dataList = [
+    "AnimationDemo",
+    "SizeColor",
+    "SafeArea",
+    "ValueNotifierWidget",
+    "CustomSV",
+    "StreamFile"
+  ];
 
   @override
   void initState() {
@@ -170,25 +187,79 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     print("****debug11****");
-    return Material(
-      child: GestureDetector(
-        onTap: () {
-          // insert();
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            // return AnimationDemo();
-            // return SizeColor();
-            // return SafeArea();
-            // return ValueNotifierWidget();
-            return CustomSV();
-            // queryDB();
-          }));
-          // ToastUtil.show('节日来啦');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Stream"),
+      ),
+      body: new ListView.builder(
+        padding: new EdgeInsets.all(5.0),
+        itemCount: dataList.length,
+        itemExtent: 80,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  // return SizeColor();
+                  // return SafeArea();
+                  // return ValueNotifierWidget();
+                  // return CustomSV();
+                  if (dataList[index] == "AnimationDemo") {
+                    return AnimationDemo();
+                  } else if (dataList[index] == "SizeColor") {
+                    return SizeColor();
+                  } else if (dataList[index] == "SafeArea") {
+                    return SafeAreaPage();
+                  } else if (dataList[index] == "ValueNotifierWidget") {
+                    return ValueNotifierWidget();
+                  } else if (dataList[index] == "CustomSV") {
+                    return CustomSV();
+                  } else if (dataList[index] == "StreamFile") {
+                    return StreamBuilderPage();
+                  } else if (dataList[index] == "") {}
+                }));
+              },
+              child: new Container(
+                child: new Text(
+                  "${dataList[index]}",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ));
         },
-        child: Container(
-          color: Colors.red,
-        ),
       ),
     );
+    // return BlocProvider(
+    //   create: (_) => ThemeCubit(),
+    //   child: BlocBuilder<ThemeCubit, ThemeData>(
+    //     builder: (_, theme) {
+    //       return MaterialApp(
+    //         theme: theme,
+    //         home: BlocProvider(
+    //           create: (_) => CounterBloc(),
+    //           child: CounterPage(),
+    //         ),
+    //       );
+    //     },
+    //   ),
+    // );
+    // return Material(
+    //   child: GestureDetector(
+    //     onTap: () {
+    //       // insert();
+    //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+    // // return AnimationDemo();
+    // // return SizeColor();
+    // // return SafeArea();
+    // // return ValueNotifierWidget();
+    // return CustomSV();
+    //         // queryDB();
+    //       }));
+    //       // ToastUtil.show('节日来啦');
+    //     },
+    //     child: Container(
+    //       color: Colors.red,
+    //     ),
+    //   ),
+    // );
   }
 
   static insert() async {

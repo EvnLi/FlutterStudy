@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SafeArea extends StatefulWidget {
+class SafeAreaPage extends StatefulWidget {
   @override
   _SafeAreaState createState() => _SafeAreaState();
 }
 
-class _SafeAreaState extends State<SafeArea>
+class _SafeAreaState extends State<SafeAreaPage>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
