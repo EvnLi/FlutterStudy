@@ -17,6 +17,9 @@ import 'package:flutterapp/DB/user_db_provider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutterapp/util/toast_util.dart';
 import 'package:flutterapp/stream/stream_builder.dart';
+import 'package:flutterapp/widget/text_field.dart';
+import 'package:flutterapp/Interface/interface.dart';
+import 'package:flutterapp/Animation/slide_transition.dart';
 
 //bloc
 import 'package:flutterapp/bloc/bloc_observer.dart';
@@ -83,7 +86,10 @@ class _MyHomePageState extends State<MyHomePage> {
     "SafeArea",
     "ValueNotifierWidget",
     "CustomSV",
-    "StreamFile"
+    "StreamFile",
+    "TextFieldDemo",
+    "Interface",
+    "SlideTransition"
   ];
 
   @override
@@ -198,25 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  // return SizeColor();
-                  // return SafeArea();
-                  // return ValueNotifierWidget();
-                  // return CustomSV();
-                  if (dataList[index] == "AnimationDemo") {
-                    return AnimationDemo();
-                  } else if (dataList[index] == "SizeColor") {
-                    return SizeColor();
-                  } else if (dataList[index] == "SafeArea") {
-                    return SafeAreaPage();
-                  } else if (dataList[index] == "ValueNotifierWidget") {
-                    return ValueNotifierWidget();
-                  } else if (dataList[index] == "CustomSV") {
-                    return CustomSV();
-                  } else if (dataList[index] == "StreamFile") {
-                    return StreamBuilderPage();
-                  } else if (dataList[index] == "") {}
-                }));
+                changePage(dataList[index], context);
               },
               child: new Container(
                 child: new Text(
@@ -260,6 +248,31 @@ class _MyHomePageState extends State<MyHomePage> {
     //     ),
     //   ),
     // );
+  }
+
+  void changePage(String title, BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      if (title == "AnimationDemo") {
+        return AnimationDemo();
+      } else if (title == "SizeColor") {
+        return SizeColor();
+      } else if (title == "SafeArea") {
+        return SafeAreaPage();
+      } else if (title == "ValueNotifierWidget") {
+        return ValueNotifierWidget();
+      } else if (title == "CustomSV") {
+        return CustomSV();
+      } else if (title == "StreamFile") {
+        return StreamBuilderPage();
+      } else if (title == "TextFieldDemo") {
+        print("****TVDemo***");
+        return TVDemoPage();
+      } else if (title == "Interface") {
+        return InterfacePage();
+      } else if (title == "SlideTransition") {
+        return SlideTransitionPage();
+      }
+    }));
   }
 
   static insert() async {
