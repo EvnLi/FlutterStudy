@@ -6,25 +6,15 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterapp/Animation/Animation.dart';
-import 'package:flutterapp/Animation/SizeColor.dart';
 import 'package:flutterapp/Model/user_model.dart';
-import 'package:flutterapp/Area/safe_area.dart';
-import 'package:flutterapp/Notifier/ValueNotifier.dart';
 import 'package:flutterapp/util/toast_util.dart';
-import 'package:flutterapp/ScrollView/custom_sv.dart';
 import 'package:flutterapp/DB/user_db_provider.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:flutterapp/util/toast_util.dart';
-import 'package:flutterapp/stream/stream_builder.dart';
-import 'package:flutterapp/widget/text_field.dart';
-import 'package:flutterapp/Interface/interface.dart';
-import 'package:flutterapp/Animation/slide_transition.dart';
+import 'package:flutterapp/router.dart';
+import 'package:flutterapp/Collect/collect.dart';
 
 //bloc
 import 'package:flutterapp/bloc/bloc_observer.dart';
-import 'package:flutterapp/bloc/counter_page.dart';
-import 'package:flutterapp/bloc/counter_theme.dart';
 
 void main() {
   Bloc.observer = SimpleBlocObserver();
@@ -52,6 +42,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      onGenerateRoute: FSRouter.generateRoute,
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -81,15 +72,16 @@ class _MyHomePageState extends State<MyHomePage> {
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<ConnectivityResult> _streamSubscription;
   List<String> dataList = [
-    "AnimationDemo",
-    "SizeColor",
-    "SafeArea",
-    "ValueNotifierWidget",
-    "CustomSV",
-    "StreamFile",
-    "TextFieldDemo",
-    "Interface",
-    "SlideTransition"
+    "animationDemo",
+    "sizeColor",
+    "safeArea",
+    "valueNotifierWidget",
+    "customSV",
+    "streamFile",
+    "textFieldDemo",
+    "interface",
+    "slideTransition",
+    "collect"
   ];
 
   @override
@@ -251,28 +243,29 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void changePage(String title, BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      if (title == "AnimationDemo") {
-        return AnimationDemo();
-      } else if (title == "SizeColor") {
-        return SizeColor();
-      } else if (title == "SafeArea") {
-        return SafeAreaPage();
-      } else if (title == "ValueNotifierWidget") {
-        return ValueNotifierWidget();
-      } else if (title == "CustomSV") {
-        return CustomSV();
-      } else if (title == "StreamFile") {
-        return StreamBuilderPage();
-      } else if (title == "TextFieldDemo") {
-        print("****TVDemo***");
-        return TVDemoPage();
-      } else if (title == "Interface") {
-        return InterfacePage();
-      } else if (title == "SlideTransition") {
-        return SlideTransitionPage();
-      }
-    }));
+    Navigator.pushNamed(context, title, arguments: "");
+    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //   if (title == "AnimationDemo") {
+    //     return AnimationDemo();
+    //   } else if (title == "SizeColor") {
+    //     return SizeColor();
+    //   } else if (title == "SafeArea") {
+    //     return SafeAreaPage();
+    //   } else if (title == "ValueNotifierWidget") {
+    //     return ValueNotifierWidget();
+    //   } else if (title == "CustomSV") {
+    //     return CustomSV();
+    //   } else if (title == "StreamFile") {
+    //     return StreamBuilderPage();
+    //   } else if (title == "TextFieldDemo") {
+    //     print("****TVDemo***");
+    //     return TVDemoPage();
+    //   } else if (title == "Interface") {
+    //     return InterfacePage();
+    //   } else if (title == "SlideTransition") {
+    //     return SlideTransitionPage();
+    //   }
+    // }));
   }
 
   static insert() async {

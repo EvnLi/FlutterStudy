@@ -55,15 +55,26 @@ class _InterfacePageState extends State<InterfacePage>
   Widget _wrapWidget() {
     return Wrap(
       children: [
-        Row(
-          children: [
-            Text("变换1"),
-            Text("变换2"),
-            Text("变换3"),
-            Text("变换4"),
-            Text("变换5"),
-            Text("变换6"),
-          ],
+        // Row(
+        //   children: [
+        //     Text("变换1"),
+        //     Text("变换2"),
+        //     Text("变换3"),
+        //     Text("变换4"),
+        //     Text("变换5"),
+        //     Text("变换6"),
+
+        //   ],
+        // ),
+        Container(
+          width: 200,
+          height: 80,
+          color: Colors.yellow,
+          alignment: Alignment.bottomCenter,
+          child: Text(
+            "对齐方式",
+            style: TextStyle(fontSize: 12, color: Colors.black),
+          ),
         ),
       ],
     );
