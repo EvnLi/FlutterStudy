@@ -81,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
     "textFieldDemo",
     "interface",
     "slideTransition",
-    "collect"
+    "collect",
+    "raisedButton"
   ];
 
   @override
@@ -184,7 +185,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("****debug11****");
     return Scaffold(
       appBar: AppBar(
         title: Text("Stream"),

@@ -14,6 +14,7 @@ import 'package:flutterapp/ScrollView/custom_sv.dart';
 import 'package:flutterapp/bloc/counter_page.dart';
 import 'package:flutterapp/bloc/counter_theme.dart';
 import 'package:flutterapp/Collect/collect.dart';
+import 'package:flutterapp/Raised_Button/raised_button.dart';
 
 class FSRouter {
   static const String animationDemo = "animationDemo";
@@ -26,6 +27,7 @@ class FSRouter {
   static const String interface = "interface";
   static const String slideTransition = "slideTransition";
   static const String collect = "collect";
+  static const String raisedButton = "raisedButton";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -58,6 +60,9 @@ class FSRouter {
         break;
       case collect:
         return Right2LeftRouter(child: CollectPage());
+        break;
+      case raisedButton:
+        return Right2LeftRouter(child: RaisedButtonPage());
         break;
       default:
         return MaterialPageRoute(
