@@ -4,6 +4,7 @@ import 'package:flutterapp/Components/feedback_widget.dart';
 import 'package:flutterapp/Components/circle_image_widget.dart';
 import 'package:flutterapp/Collect/category.dart';
 import 'package:flutterapp/Collect/default.dart';
+import 'package:flutterapp/util/constant.dart';
 
 class CollectPage extends StatefulWidget {
   @override
@@ -67,7 +68,7 @@ class _CollectPageState extends State<CollectPage>
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax, //视差效果
         background: Image.asset(
-          "assets/images/caver.webp",
+          Images.collect,
           fit: BoxFit.cover,
         ),
       ),

@@ -6,12 +6,9 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterapp/Model/user_model.dart';
 import 'package:flutterapp/util/toast_util.dart';
-import 'package:flutterapp/DB/user_db_provider.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutterapp/router.dart';
-import 'package:flutterapp/Collect/collect.dart';
 
 //bloc
 import 'package:flutterapp/bloc/bloc_observer.dart';
@@ -82,11 +79,17 @@ class _MyHomePageState extends State<MyHomePage> {
     "interface",
     "slideTransition",
     "collect",
-    "raisedButton"
+    "raisedButton",
+    "testWidgetPage",
+    "dbList"
   ];
 
   @override
   void initState() {
+    List numList = [1, 2, 3, 4];
+    print(numList);
+    var mapTest = numList.map((f) => f * 5);
+    print(mapTest); //转化成一个map
     super.initState();
     initConnectivity();
     _streamSubscription =
@@ -266,26 +269,5 @@ class _MyHomePageState extends State<MyHomePage> {
     //     return SlideTransitionPage();
     //   }
     // }));
-  }
-
-  static insert() async {
-    print('*****1111111**');
-    UserDBProvider dbP = new UserDBProvider();
-    UserModel model = new UserModel();
-    model.id = 123456;
-    model.userName = "小王";
-    model.nick = "忘老五";
-    await dbP.insert(model);
-
-    print('*****2222222**');
-    UserModel model1 = await dbP.getUserInfo(123456);
-    print('*****333333**');
-    print('id=${model1.id},username =${model1.userName},nick=${model1.nick}');
-  }
-
-  queryDB() async {
-    UserDBProvider dbP = new UserDBProvider();
-    UserModel model = await dbP.getUserInfo(123456);
-    print('id=${model.id},username =${model.userName},nick=${model.nick}');
   }
 }

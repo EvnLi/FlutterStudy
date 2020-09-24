@@ -7,16 +7,16 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    userName = json['username'];
+    userName = json['userName'];
     nick = json['nick'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['username'] = this.userName;
+    data['userName'] = this.userName;
     data['nick'] = this.nick;
-
+    print(data);
     return data;
   }
 }

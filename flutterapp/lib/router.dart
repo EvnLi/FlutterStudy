@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/util/router_util.dart';
-import 'package:flutterapp/Interface/interface.dart';
-import 'package:flutterapp/util/toast_util.dart';
-import 'package:flutterapp/stream/stream_builder.dart';
-import 'package:flutterapp/widget/text_field.dart';
-import 'package:flutterapp/Interface/interface.dart';
-import 'package:flutterapp/Animation/slide_transition.dart';
-import 'package:flutterapp/Area/safe_area.dart';
-import 'package:flutterapp/Notifier/ValueNotifier.dart';
-import 'package:flutterapp/Animation/Animation.dart';
-import 'package:flutterapp/Animation/SizeColor.dart';
-import 'package:flutterapp/ScrollView/custom_sv.dart';
-import 'package:flutterapp/bloc/counter_page.dart';
-import 'package:flutterapp/bloc/counter_theme.dart';
-import 'package:flutterapp/Collect/collect.dart';
-import 'package:flutterapp/Raised_Button/raised_button.dart';
+import 'package:flutterapp/DB/db_list.dart';
+import 'package:flutterapp/TestWidget/test_widget_page.dart';
+import 'package:flutterapp/util/public_header.dart';
 
 class FSRouter {
   static const String animationDemo = "animationDemo";
@@ -28,6 +15,8 @@ class FSRouter {
   static const String slideTransition = "slideTransition";
   static const String collect = "collect";
   static const String raisedButton = "raisedButton";
+  static const String testWidgetPage = "testWidgetPage";
+  static const String dbList = "dbList";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -63,6 +52,12 @@ class FSRouter {
         break;
       case raisedButton:
         return Right2LeftRouter(child: RaisedButtonPage());
+        break;
+      case testWidgetPage:
+        return Right2LeftRouter(child: TestWidgetPage());
+        break;
+      case dbList:
+        return Right2LeftRouter(child: DBList());
         break;
       default:
         return MaterialPageRoute(
