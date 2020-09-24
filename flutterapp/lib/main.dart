@@ -247,27 +247,5 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void changePage(String title, BuildContext context) {
     Navigator.pushNamed(context, title, arguments: "");
-    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //   if (title == "AnimationDemo") {
-    //     return AnimationDemo();
-    //   } else if (title == "SizeColor") {
-    //     return SizeColor();
-    //   } else if (title == "SafeArea") {
-    //     return SafeAreaPage();
-    //   } else if (title == "ValueNotifierWidget") {
-    //     return ValueNotifierWidget();
-    //   } else if (title == "CustomSV") {
-    //     return CustomSV();
-    //   } else if (title == "StreamFile") {
-    //     return StreamBuilderPage();
-    //   } else if (title == "TextFieldDemo") {
-    //     print("****TVDemo***");
-    //     return TVDemoPage();
-    //   } else if (title == "Interface") {
-    //     return InterfacePage();
-    //   } else if (title == "SlideTransition") {
-    //     return SlideTransitionPage();
-    //   }
-    // }));
   }
 }

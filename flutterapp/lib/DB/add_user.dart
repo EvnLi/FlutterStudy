@@ -3,12 +3,13 @@ import 'package:flutterapp/Model/user_model.dart';
 import 'package:flutterapp/DB/db_provider.dart';
 
 class AddUser extends StatefulWidget {
+  int id = -1;
+  AddUser({this.id});
   @override
   _AddUserState createState() => _AddUserState();
 }
 
 class _AddUserState extends State<AddUser> {
-  String _value = "0";
   TextEditingController _nameController;
   TextEditingController _nickController;
 
@@ -54,7 +55,16 @@ class _AddUserState extends State<AddUser> {
                       userName: '${_nameController.text}',
                       nick: '${_nickController.text}');
 
-                  int result = await DBProvider().saveData(user);
+                  int result = 0;
+                  print(widget.id);
+                  if (widget.id == -1) {
+                    print("**保存数据**");
+                    result = await DBProvider().saveData(user);
+                  } else {
+                    print("**更新数据**");
+                    user.id = widget.id;
+                    result = await DBProvider().update(user);
+                  }
                   if (result > 0) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text('保存数据成功，result:$result'),

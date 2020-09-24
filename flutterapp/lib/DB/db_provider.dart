@@ -51,6 +51,34 @@ class DBProvider {
         : [];
   }
 
+  Future<List<UserModel>> find(int index) async {
+    var _db = await db;
+    List<Map<String, dynamic>> result =
+        await _db.query('User', where: 'id = ?', whereArgs: [index]);
+
+    return result.isNotEmpty
+        ? result.map((e) {
+            return UserModel.fromJson(e);
+          }).toList()
+        : [];
+  }
+
+  Future<int> delete(int id) async {
+    var _db = await db;
+    return await _db.delete('User', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> update(UserModel user) async {
+    var _db = await db;
+    return await _db
+        .update('User', user.toJson(), where: 'id = ?', whereArgs: [user.id]);
+  }
+
+  Future<int> deleteAll() async {
+    var _db = await db;
+    return await _db.delete('User');
+  }
+
   ///
   /// 更新Table
   ///

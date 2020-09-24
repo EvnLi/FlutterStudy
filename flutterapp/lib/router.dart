@@ -17,8 +17,10 @@ class FSRouter {
   static const String raisedButton = "raisedButton";
   static const String testWidgetPage = "testWidgetPage";
   static const String dbList = "dbList";
+  static const String addUser = "addUser";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    print("***settings.arguments = ${settings.arguments}****");
     switch (settings.name) {
       case animationDemo:
         return Right2LeftRouter(child: AnimationDemo());
@@ -58,6 +60,12 @@ class FSRouter {
         break;
       case dbList:
         return Right2LeftRouter(child: DBList());
+        break;
+      case addUser:
+        return Right2LeftRouter(
+            child: AddUser(
+          id: settings.arguments,
+        ));
         break;
       default:
         return MaterialPageRoute(
